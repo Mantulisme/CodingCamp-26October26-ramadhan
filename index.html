@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budgeter</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Header / Balance -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <h1 class="app-title">Budgeter</h1>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" id="themeIcon"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" id="themeRays"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="balance-card">
+        <span class="balance-label">Account Balance</span>
+        <span class="balance-amount" id="balanceDisplay">Rp 0</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Monthly Budget Summary -->
+    <section class="card budget-card-wrapper">
+      <div class="budget-header">
+        <h2 class="section-title" style="margin: 0;">Monthly Budget</h2>
+        <span class="budget-current" id="currentMonthBudget">Rp 2,000,000</span>
+      </div>
+      <div class="budget-summary" id="budgetList">
+        <p style="color:var(--text-muted); font-size:.85rem; text-align:center; padding:1rem;">
+          No spending data yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- Budget History -->
+    <section class="card budget-history-card">
+      <h2 class="section-title">Budget History</h2>
+      <div class="budget-history-wrapper" id="budgetHistoryList">
+        <p style="color:var(--text-muted); font-size:.85rem; text-align:center; padding:1rem;">
+          No history available yet. Start adding transactions to see monthly trends.
+        </p>
+      </div>
+    </section>
+
+    <!-- Add Transaction Form -->
+    <section class="card form-card">
+      <h2 class="section-title">Add Transaction</h2>
+      <form id="transactionForm" novalidate>
+        <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input type="text" id="itemName" placeholder="e.g. Lunch at warung" autocomplete="off" />
+          <span class="field-error" id="itemNameError"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="amount">Amount (Rp)</label>
+            <input type="number" id="amount" placeholder="e.g. 25000" min="1" />
+            <span class="field-error" id="amountError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select id="type">
+              <option value="expense">Expense (−)</option>
+              <option value="income">Income (+)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="">— Select category —</option>
+            <option value="Food & Drink">Food &amp; Drink</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Health">Health</option>
+            <option value="Education">Education</option>
+            <option value="Bills & Utilities">Bills &amp; Utilities</option>
+            <option value="Income">Income</option>
+            <option value="Other">Other</option>
+          </select>
+          <span class="field-error" id="categoryError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="txDate">Date</label>
+          <input type="date" id="txDate" />
+        </div>
+
+        <button type="submit" class="btn-primary">Add Transaction</button>
+      </form>
+    </section>
+
+
+
+    <!-- Charts Row -->
+    <section class="charts-row">
+
+      <!-- Pie Chart -->
+      <div class="card chart-card">
+        <h2 class="section-title">Spending by Category</h2>
+        <div class="pie-wrapper">
+          <canvas id="pieChart"></canvas>
+          <div class="pie-legend" id="pieLegend"></div>
+        </div>
+        <p class="chart-empty" id="pieEmpty">No expense data yet.</p>
+      </div>
+
+      <!-- Line Chart -->
+      <div class="card chart-card">
+        <h2 class="section-title">Balance Over Time</h2>
+        <canvas id="lineChart"></canvas>
+        <p class="chart-empty" id="lineEmpty">Add transactions to see trend.</p>
+      </div>
+
+    </section>
+
+    <!-- Transaction List -->
+    <section class="card list-card">
+      <div class="list-header">
+        <h2 class="section-title">Transactions</h2>
+        <span class="tx-count" id="txCount">0 entries</span>
+      </div>
+      <div class="tx-list-scroll" id="txList">
+        <p class="list-empty" id="listEmpty">No transactions recorded yet.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Delete confirm toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
